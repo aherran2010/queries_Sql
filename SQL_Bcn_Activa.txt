@@ -1,0 +1,43 @@
+-- 1.- 
+	SELECT count(*) FROM usairlineflights2.flights;
+
+-- 2.-
+	SELECT origin, avg(arrdelay) as pro_arribades, Avg(DepDelay) as pro_sortides 
+	 FROM usairlineflights2.flights
+	group by origin
+	order by origin;
+	
+--3.- 
+	SELECT Origin, colYear, colMonth, avg(ArrDelay) as pro_arribades
+	 FROM usairlineflights2.flights 
+	group by Origin, colYear, colMonth
+	order by Origin, colYear, colMonth;
+
+-- 4.-
+	SELECT usairlineflights2.usairports.City, colYear, colMonth, avg(ArrDelay) as pro_arribades
+	 FROM usairlineflights2.flights left join usairlineflights2.usairports
+	 ON usairlineflights2.flights.Origin = usairlineflights2.usairports.IATA
+	group by usairlineflights2.usairports.City, colYear, colMonth
+	order by usairlineflights2.usairports.City, colYear, colMonth;
+
+-- 5.- 
+	SELECT UniqueCarrier, colYear, colMonth, count(*) as total_cancelled
+	 FROM usairlineflights2.flights
+	group by UniqueCarrier, colYear, colMonth
+	order by total_cancelled desc , UniqueCarrier, colYear, colMonth;
+
+-- 6.
+	SELECT TailNum, Sum(Distance) as total FROM usairlineflights2.flights 
+	Where  TailNum <> '' 
+	Group By TailNum
+	order by Sum(Distance) desc 
+	Limit 10 
+	;
+
+--7.- 
+	SELECT UniqueCarrier, avg(ArrDelay) as avgDelay 
+		FROM usairlineflights2.flights    
+	Group by UniqueCarrier
+	Having avgDelay > 10 
+	Order by avgDelay desc;
+
